@@ -28,41 +28,25 @@ app.get('/movie', [validateBearerToken], function (req, res) {
     let response = movies;
     console.log(req.query);
 
-    if (!Object.keys(req.query).length) {
-      console.log('wait');
-      res.json(response);
-      return 
-    }
 
     if (req.query.genre) {
-      responseGenre = response.filter(movie =>
+      response = response.filter(movie =>
         movie.genre.toLowerCase().includes(req.query.genre.toLowerCase())
         );
       }
-      else {
-        return res.status(400).json({ error: 'bad genre' });
-      }
-  
-
+     
     if (req.query.country) {
-      responseCountry = response.filter(movie =>
+      response = response.filter(movie =>
         movie.country.toLowerCase().includes(req.query.country.toLowerCase())
         );
-    } else {
-      return res.status(400).json({ error: 'bad country' });
-    }
-
+    } 
   
     if (req.query.avg_vote) {
-      responseAvg = response.filter(movie =>
+      response = response.filter(movie =>
         Number(movie.avg_vote) >= Number(req.query.avg_vote)
         );
       }
-      else {
-        return res.status(400).json({ error: 'bad avg_Vote' });
-      }
-  
-
+      
     res.json(response)
 })
 
